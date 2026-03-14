@@ -1,0 +1,23 @@
+{%extends'layout.html'%}
+{%block content%}
+{% for post in tposts %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ post.author.username }}</a>
+      <small class="text-muted">{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
+
+      {% if session['user_id'] == post.user_id %}
+      <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}" style="display:inline;">
+        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+      </form>
+      {% endif %}
+    </div>
+
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+  </div>
+</article>
+{% endfor %}
+
+{%endblock content%}
